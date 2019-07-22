@@ -45,32 +45,66 @@ myQueue.until(7)
 => 3
 What's the time complexity?
 
-
-
-
  */
 
-function Queue(capacity) {
-  // implement me...
+class Queue {
+  constructor(){
+    this._storage = {}
+    this._length = 0;
+    this._headIndex = 0;
+  }
+
+  enqueue(value){
+    this._storage[this._headIndex+this._length] = value;
+    this._length += 1;
+  }
+
+  dequeue(){
+    const value = this._storage[this._headIndex];
+    delete this._storage[this._headIndex];
+    this._headIndex += 1;    
+    this._length -= 1;
+    return value;
+  }
+
+  peek(){
+    return this._storage[this._headIndex];
+  }
 }
 
-Queue.prototype.enqueue = function(value) {
-  // implement me...
-};
-// Time complexity:
+const queue = new Queue();
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.enqueue(4);
+queue.enqueue(5);
 
-Queue.prototype.dequeue = function() {
-  // implement me...
-};
-// Time complexity:
+console.log(queue.dequeue())
+console.log(queue.dequeue())
+queue.enqueue(6);
+console.log(queue)
 
-Queue.prototype.peek = function() {
-  // implement me...
-};
+// function Queue(capacity) {
+//   // implement me...
+// }
 
-Queue.prototype.count = function() {
-  // implement me...
-};
+// Queue.prototype.enqueue = function(value) {
+//   // implement me...
+// };
+// // Time complexity:
+
+// Queue.prototype.dequeue = function() {
+//   // implement me...
+// };
+// // Time complexity:
+
+// Queue.prototype.peek = function() {
+//   // implement me...
+// };
+
+// Queue.prototype.count = function() {
+//   // implement me...
+// };
 // Time complexity:
 
 

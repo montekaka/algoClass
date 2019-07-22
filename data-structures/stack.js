@@ -50,6 +50,39 @@ What's the time complexity?
 
  */
 
+class Stack {
+  constructor() {
+    this._storage = {}
+    this._length = 0;
+  }
+
+  push(value) {
+    this._storage[this._length] = value;
+    this._length += 1;    
+  }
+
+  pop() {
+    let value = this._storage[this._length];
+    this._storage[this._length] = null;
+    this._length -= 1;
+    return value;
+  }
+
+  peek(){
+    return this._storage[this._length];
+  }
+
+  contains(value) {
+    let result = false;
+    for(var i = 0; i < this._length; i++) {
+      if(this._storage[i] === value) {
+        result = true;
+      }
+    }
+    return false;
+  }
+}
+
 function Stack(capacity) {
   // implement me...
 }

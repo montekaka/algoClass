@@ -39,29 +39,93 @@ https://en.wikipedia.org/wiki/Trie
 
 */
 
-function Tree (value) {
-  // implement me...
+// function Tree (value) {
+//   // implement me...
+// }
+
+// Tree.prototype.addChild = function(value) {
+//   // implement me...
+// };
+// // Time complexity:
+
+
+// Tree.prototype.contains = function(value) {
+//   // implement me...
+// };
+// // Time complexity:
+
+
+// Tree.prototype.traverseDepthFirst = function(fn) {
+//   // implement me...
+// };
+// // Time complexity:
+
+
+// Tree.prototype.traverseBreadthFirst = function(fn) {
+//   // implement me...
+// };
+// // Time complexity:
+
+class Tree {
+  constructor (value) {
+    this.value = value;
+    this.children = [];
+  }
+
+  addChild(value) {
+    const child = new Tree(value);
+    this.children.push(child);
+    return child;
+  }
+
+  contains(value) {
+    if(this.value === value) return true;
+    for(let i = 0; i < this.children.length; i++) {
+      if(this.children[i].contains(value)) return true;
+    }
+    return false;
+  }
+
+  // DFS -- Depth first search
+  traverseDepthFirst(cb) {
+    this.children.forEach((child) => {
+      child.traverseDepthFirst(cb);
+    }) 
+    cb(this);
+  }
+
+  //BFS Breadth First Search
+  traverseBreadthFirst(cb) {
+    let queue = [this]; // first in first out
+    while(queue.length > 0) {
+      const node = queue.shift();
+      cb(node);
+      node.children.forEach((child) => {
+        queue.push(child);
+      });      
+    }
+  }
+
 }
 
-Tree.prototype.addChild = function(value) {
-  // implement me...
-};
-// Time complexity:
+var tree = new Tree(1);
+var branch1 = tree.addChild(2);
+var branch2 = tree.addChild(3);
+var branch3 = tree.addChild(4);
+branch1.addChild(5);
+branch1.addChild(6);
+branch3.addChild(7).addChild(8);
 
+console.log(tree.contains(8));
 
-Tree.prototype.contains = function(value) {
-  // implement me...
-};
-// Time complexity:
+var depthFirstResult = [];
+tree.traverseDepthFirst(function(node) {
+  depthFirstResult.push(node.value);
+});
+console.log(depthFirstResult, 'should be [5, 6, 2, 3, 8, 7, 4, 1]');
 
-
-Tree.prototype.traverseDepthFirst = function(fn) {
-  // implement me...
-};
-// Time complexity:
-
-
-Tree.prototype.traverseBreadthFirst = function(fn) {
-  // implement me...
-};
-// Time complexity:
+let breadthFirstResult = [];
+tree.traverseBreadthFirst((node) => {
+  breadthFirstResult.push(node.value);
+})
+console.log(breadthFirstResult, 'should be [1, 2, 3, 4, 5, 6, 7, 8]');
