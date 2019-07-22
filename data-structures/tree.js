@@ -90,7 +90,7 @@ class Tree {
   traverseDepthFirst(cb) {
     this.children.forEach((child) => {
       child.traverseDepthFirst(cb);
-    }) 
+    })
     cb(this);
   }
 
@@ -102,7 +102,7 @@ class Tree {
       cb(node);
       node.children.forEach((child) => {
         queue.push(child);
-      });      
+      })
     }
   }
 
