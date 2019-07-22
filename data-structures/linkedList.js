@@ -91,84 +91,35 @@ class LinkedList {
   }
 
   insert(value) {
-    const node = new Node(value);
-    if(!this.head) {      
-      this.head = node;
-      this.tail = this.head;
-    } else if (this.head === this.tail) {
-      this.head.next = node;
-      this.tail = node;
-    } else {
-      this.tail.next = node;
-      this.tail = node;
-    }
+  
   }
 
   reverse() {
-    if(!this.head || !this.head.next) return this.head;
-
-    let first = this.head;
-    let second = this.head.next;
-    while(second) {
-      const temp = second.next;
-      second.next = first;
-      first = second;
-      second = temp;
-    }
-    this.head.next = null;
-    this.head = first;
+   
   }
 
   forEach(cb) {
-    let node = this.head;
-    while(node) {
-      cb(node.value);
-      node = node.next;
-    }
+  
   }
 
   print() {
-    let result = [];
-    this.forEach((value) => {
-      result.push(value)
-    });
-    return result.join(", ");
+   
   }
 
   insertAfter(node, value) {
-    let oldNext = node.next;
-    let newNext = new Node(value);
-    node.next = newNext;
-    newNext.next = oldNext;
-    if(this.tail === node) this.tail = newNext;
-    return newNext;
+    
   }
 
   removeAfter(node) {
-    let removeNode = node.next;
-    if(!removeNode) return "Nothing to remove";
-    let newNext = removeNode.next;
-    node.next = newNext;
-    removeNode.next = null;
-    if(this.tail === removeNode) this.tail = node;
-    return removeNode;
+   
   }
 
   insertHead(value) {
-    const node = new Node(value);
-    const head = this.head;
-    node.next = head;
-    this.head = node;
-    return this.head;
+  
   }
 
   removeHead() {
-    const head = this.head;
-    const next = head.next;
-    this.head = next;
-    head.next = null;
-    if(this.tail === head) this.tail = next;
-    return head;
+
   }
 
   findNode(value) {

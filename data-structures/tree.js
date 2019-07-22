@@ -73,37 +73,18 @@ class Tree {
   }
 
   addChild(value) {
-    const child = new Tree(value);
-    this.children.push(child);
-    return child;
   }
 
   contains(value) {
-    if(this.value === value) return true;
-    for(let i = 0; i < this.children.length; i++) {
-      if(this.children[i].contains(value)) return true;
-    }
-    return false;
   }
 
   // DFS -- Depth first search
   traverseDepthFirst(cb) {
-    this.children.forEach((child) => {
-      child.traverseDepthFirst(cb);
-    }) 
-    cb(this);
   }
 
   //BFS Breadth First Search
   traverseBreadthFirst(cb) {
-    let queue = [this]; // first in first out
-    while(queue.length > 0) {
-      const node = queue.shift();
-      cb(node);
-      node.children.forEach((child) => {
-        queue.push(child);
-      });      
-    }
+
   }
 
 }
