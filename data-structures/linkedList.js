@@ -91,39 +91,86 @@ class LinkedList {
   }
 
   insert(value) {
-  
+    const node = new Node(value);
+    this.tail.next = node;
   }
 
   reverse() {
-   
+    if(!this.head) return this.head;
+    let first = this.head;
+    let second = this.head.next;
+    // handle tail
+    this.tail = first;
+    while(second) {
+      const temp = second.next;
+      second.next = first;
+      first = second;
+      second = temp;
+    }
+    this.head.next = null;
+    this.head = first;
   }
 
-  forEach(cb) {
-  
+  forEach(cb) {    
+    let node = this.head;
+    while(node) {
+      cb(node);
+      node = node.next;
+    }
   }
 
   print() {
-   
+    let result = [];
+    this.forEach((node) => {
+      result.push(node.value);
+    })
+    return result.join(", ");
   }
 
   insertAfter(node, value) {
-    
+    const newNode = new Node(value);    
+    const nextNode = node.next;
+    node.next = newNode;
+    newNode.next = nextNode;
+    if(this.tail === node) this.tail = newNode;
+    return newNode
   }
 
   removeAfter(node) {
-   
+    const removeNode = node.next;
+    if(!removeNode) return 'Nothing to remove';
+    const newNext = removeNode.next;
+    node.next = newNext;
+    removeNode.next = null;
+    if(this.tail === removeNode) this.tail = node;
+    return removeNode;
   }
 
   insertHead(value) {
-  
+    const newHead = new Node(value);
+    const head = this.head;
+    newHead.next = head;
+    this.head = newHead;
+    return this.head;
   }
 
   removeHead() {
-
+    const head = this.head;
+    const newHead = head.next;
+    if(this.head === this.tail) {
+      this.tail = newHead;
+    }
+    head.next = null;
+    this.head = newHead;
   }
 
   findNode(value) {
-    
+    if(!this.head) return null;
+    let node = this.head;
+    while(node) {
+      if(node.value === value) return node;
+      node = node.next;
+    }
   }
 
 }

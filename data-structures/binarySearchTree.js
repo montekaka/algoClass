@@ -51,44 +51,183 @@ A binary search tree was created by iterating over an array and inserting each e
 
 */
 
-function BinarySearchTree (value) {
-  this.value = value;
-  this.left = null;
-  this.right = null;
+// function BinarySearchTree (value) {
+//   this.value = value;
+//   this.left = null;
+//   this.right = null;
+// }
+
+// BinarySearchTree.prototype.insert = function(value) {
+//   // implement me...
+// };
+// // Time complexity:
+
+// BinarySearchTree.prototype.contains = function(value) {
+//   // implement me...
+// };
+// // Time complexity:
+
+// BinarySearchTree.prototype.traverseDepthFirst_inOrder = function(fn) {
+//   // implement me...
+// };
+// // Time complexity:
+
+// BinarySearchTree.prototype.traverseDepthFirst_preOrder = function(fn) {
+//   // implement me...
+// };
+// // Time complexity:
+
+// BinarySearchTree.prototype.traverseDepthFirst_postOrder = function(fn) {
+//   // implement me...
+// };
+// // Time complexity:
+
+
+// BinarySearchTree.prototype.checkIfFull = function() {
+//   // implement me...
+// };
+// // Time complexity:
+
+// BinarySearchTree.prototype.checkIfBalanced = function() {
+//   // implement me...
+// };
+// // Time complexity:
+
+
+class BinarySearchTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+
+  insert(value) {
+    if(this.value >= value) {
+      if(this.left) {
+        this.left.insert(value);
+      } else {
+        this.left = new BinarySearchTree(value);
+      }
+    } else {
+      if(this.right) {
+        this.right.insert(value);
+      } else {
+        this.right = new BinarySearchTree(value);
+      }
+    }
+    return this;
+  }
+
+  contains(value) {
+    if(this.value === value) return true;
+    if(this.value >= value) return this.left.contains(value);
+    if(this.value < value) return this.right.contains(value);
+    return false;
+  }
+
+  maxDepth() {
+    if(this === null) return 0;
+    let left = 0;
+    let right = 0;
+    if(this.left) left = this.left.maxDepth();
+    if(this.right) right = this.right.maxDepth();
+    return Math.max(left, right)+1;
+  }
+
+  checkIfBalanced() {    
+    const maxDepth = (root) => {
+      if(root === null) return true;
+      let left = 0;
+      let right = 0;
+      if(this.left) left = maxDepth(this.left);
+      if(this.right) right = maxDepth(this.right);
+      if(left === -1 || right === -1 || Math.abs(left-right) > 0) {
+        return -1;
+      }
+      return Math.max(left, right) + 1;
+    }
+
+    return maxDepth(this) !== -1;
+  }
+
+  isValid() {
+    let lastValue = null;
+    const _isValid = (root) => {
+      if(root === null) return true;
+      if(_isValid(root.left) === false) return false;
+      if(root.value < lastValue && lastValue !== null) return false;
+      lastValue = root.value;
+      if(_isValid(root.right) === false) return false;
+      return true;
+    }
+    return _isValid(this);
+  }
+
+  traversePreOrder(cb) {
+    cb(this);
+    if(this.left) this.left.traversePreOrder(cb);
+    if(this.right) this.right.traversePreOrder(cb);
+  }
+
+  traverseInOrder(cb) {
+    if(this.left) this.left.traverseInOrder(cb);
+    cb(this);
+    if(this.right) this.right.traverseInOrder(cb);
+  }
+
+  traversePostOrder(cb) {    
+    if(this.left) this.left.traversePostOrder(cb);
+    if(this.right) this.right.traversePostOrder(cb);
+    cb(this);
+  }
+
+  traverseBreadthFirst(cb) {
+    let queue = [this] // first in first out
+    while(queue.length > 0) {
+      const node = queue.shift();
+      cb(node);
+      if(node.left) queue.push(node.left);
+      if(node.right) queue.push(node.right);
+    }
+  }
+
+
 }
 
-BinarySearchTree.prototype.insert = function(value) {
-  // implement me...
-};
-// Time complexity:
+var bsTree = new BinarySearchTree(10);
+bsTree.insert(5).insert(15).insert(8).insert(3).insert(7).insert(20).insert(17).insert(9).insert(14);
+// console.log(bsTree.isValid());
+let inOrderTraverseList = [];
+let postOrderTraverseList = [];
+let preOrderTraverseList = [];
+let beadthFirstList = [];
 
-BinarySearchTree.prototype.contains = function(value) {
-  // implement me...
-};
-// Time complexity:
+bsTree.traversePostOrder((node) => {
+  if(node) {
+    postOrderTraverseList.push(node.value);
+  }
+})
 
-BinarySearchTree.prototype.traverseDepthFirst_inOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
+bsTree.traverseInOrder((node) => {
+  if(node) {
+    inOrderTraverseList.push(node.value);
+  }
+})
 
-BinarySearchTree.prototype.traverseDepthFirst_preOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
+bsTree.traversePreOrder((node) => {
+  if(node) {
+    preOrderTraverseList.push(node.value);
+  }
+})
 
-BinarySearchTree.prototype.traverseDepthFirst_postOrder = function(fn) {
-  // implement me...
-};
-// Time complexity:
+bsTree.traverseBreadthFirst((node) => {
+  if(node) {
+    beadthFirstList.push(node.value);
+  }
+})
 
 
-BinarySearchTree.prototype.checkIfFull = function() {
-  // implement me...
-};
-// Time complexity:
-
-BinarySearchTree.prototype.checkIfBalanced = function() {
-  // implement me...
-};
-// Time complexity:
+console.log(preOrderTraverseList)
+console.log(inOrderTraverseList)
+console.log(postOrderTraverseList)
+console.log(beadthFirstList)
