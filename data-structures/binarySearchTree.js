@@ -120,27 +120,25 @@ class BinarySearchTree {
 
   contains(value) {
     if(this.value === value) return true;
-    if(this.value >= value) return this.left.contains(value);
+    if(this.value > value) return this.left.contains(value);
     if(this.value < value) return this.right.contains(value);
     return false;
   }
 
   maxDepth() {
-    if(this === null) return 0;
-    let left = 0;
+    if(!this) return 0;    
+    let left = 0;     
     let right = 0;
-    if(this.left) left = this.left.maxDepth();
-    if(this.right) right = this.right.maxDepth();
-    return Math.max(left, right)+1;
+    if(this.left) {left = this.left.maxDepth()};
+    if(this.right) {left = this.right.maxDepth()};
+    return Math.max(left, right) + 1;
   }
 
-  checkIfBalanced() {    
+  checkIfBalanced() {
     const maxDepth = (root) => {
-      if(root === null) return true;
-      let left = 0;
-      let right = 0;
-      if(this.left) left = maxDepth(this.left);
-      if(this.right) right = maxDepth(this.right);
+      if(root === null) return 0;
+      let left = maxDepth(root.left);
+      let right = maxDepth(root.right);
       if(left === -1 || right === -1 || Math.abs(left-right) > 0) {
         return -1;
       }
@@ -151,7 +149,7 @@ class BinarySearchTree {
   }
 
   isValid() {
-    let lastValue = null;
+    let lastValue = null;    
     const _isValid = (root) => {
       if(root === null) return true;
       if(_isValid(root.left) === false) return false;
@@ -170,19 +168,20 @@ class BinarySearchTree {
   }
 
   traverseInOrder(cb) {
+    if(!this.left && !this.right) return cb(this);
     if(this.left) this.left.traverseInOrder(cb);
     cb(this);
     if(this.right) this.right.traverseInOrder(cb);
   }
 
-  traversePostOrder(cb) {    
+  traversePostOrder(cb) {
     if(this.left) this.left.traversePostOrder(cb);
     if(this.right) this.right.traversePostOrder(cb);
     cb(this);
   }
 
   traverseBreadthFirst(cb) {
-    let queue = [this] // first in first out
+    let queue = [this];
     while(queue.length > 0) {
       const node = queue.shift();
       cb(node);
@@ -196,7 +195,10 @@ class BinarySearchTree {
 
 var bsTree = new BinarySearchTree(10);
 bsTree.insert(5).insert(15).insert(8).insert(3).insert(7).insert(20).insert(17).insert(9).insert(14);
-// console.log(bsTree.isValid());
+console.log(bsTree.isValid());
+console.log(bsTree.maxDepth());
+console.log(bsTree.checkIfBalanced());
+
 let inOrderTraverseList = [];
 let postOrderTraverseList = [];
 let preOrderTraverseList = [];
