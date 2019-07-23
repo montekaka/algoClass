@@ -28,9 +28,8 @@ subarrays for regular merge sort: [ [1], [2], [4], [5], [9] ]
 subarrays for natural merge sort: [ [1,2], [4,5], [9] ]
 
 */
-
 const mergeSort = (arr) => {
-  if(arr.length === 1) return arr;
+  if(arr.length <= 1) return arr;
   const mid = Math.floor(arr.length/2);
   const left = arr.slice(0, mid);
   const right = arr.slice(mid);
@@ -39,9 +38,10 @@ const mergeSort = (arr) => {
 
 const merge = (left, right) => {
   const result = [];
-  let i = left.length - 1;
-  let j = right.length - 1;
   let k = left.length + right.length - 1;
+  let i = left.length - 1;
+  let j = right.length - 1;  
+  
   while(i >= 0 && j >= 0) {
     if(left[i] > right[j]) {
       result[k] = left[i];
@@ -52,18 +52,21 @@ const merge = (left, right) => {
     }
     k-=1;
   }
+
   while(i >= 0) {
     result[k] = left[i];
     i-=1;
     k-=1;
   }
+
   while(j >= 0) {
     result[k] = right[j];
     j-=1;
     k-=1;
   }
+
   return result;
-} // O(log(n))
+}
 
 const arr = [23, 5, 3, 100, 2, 89];
 mergeSort(arr);

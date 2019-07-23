@@ -32,26 +32,26 @@ now repeat for next unsorted element
 
 const insertionSort = (arr) => {
   for(var i = 1; i < arr.length; i++) {
-    let j = 0
+    let j = 0;
     let running = true;
     while(j < i && running) {
-      if(arr[i] < arr[j]) {
-        shift(arr, j ,i);
+      if(arr[i] <= arr[j]) {        
         running = false;
+        shift(arr, j, i);
       }
       j+=1;
-    }
+    }    
   }
 } // O(N^2)
 
 const shift = (arr, start, end) => {
-  const temp = arr[end];
+  const val = arr[end];
   let i = end;
   while(i >= start) {
     arr[i] = arr[i-1];
     i-=1;
   }
-  arr[start] = temp;
+  arr[start] = val;  
 }
 
 
