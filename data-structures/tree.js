@@ -79,17 +79,15 @@ class Tree {
   }
 
   contains(value) {
-    if(!this) return false;
     if(this.value === value) return true;
     for(var i = 0; i < this.children.length; i++) {
       if(this.children[i].contains(value)) return true;
     }
-    return false;
   }
 
   // DFS -- Depth first search
-  traverseDepthFirst(cb) {
-    this.children.forEach((child) => {
+  traverseDepthFirst(cb) {        
+    this.children.forEach(function(child) {
       child.traverseDepthFirst(cb);
     });
     cb(this);
@@ -99,9 +97,9 @@ class Tree {
   traverseBreadthFirst(cb) {
     let queue = [this];
     while(queue.length > 0) {
-      const node = queue.shift();
-      cb(node);
-      node.children.forEach((child) => {
+      const tree = queue.shift();
+      cb(tree);
+      tree.children.forEach((child) => { 
         queue.push(child);
       })
     }
@@ -123,7 +121,7 @@ var depthFirstResult = [];
 tree.traverseDepthFirst(function(node) {
   depthFirstResult.push(node.value);
 });
-console.log(depthFirstResult, 'should be [5, 6, 2, 3, 8, 7, 4, 1]');
+console.log(depthFirstResult, 'should be [5,6,2,3,8,7,4,1]');
 
 let breadthFirstResult = [];
 tree.traverseBreadthFirst((node) => {

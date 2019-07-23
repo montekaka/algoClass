@@ -90,17 +90,18 @@ class LinkedList {
     this.tail = this.head;    
   }
 
-  insert(value) {
-    const node = new Node(value);
-    this.tail.next = node;
+  append(value) {
+    const newNode = new Node(value);
+    this.tail.next = newNode;
+    this.tail = newNode;
+    return newNode;    
   }
 
   reverse() {
     if(!this.head) return this.head;
     let first = this.head;
-    let second = this.head.next;
-    // handle tail
-    this.tail = first;
+    this.tail = this.head;
+    let second = first.next;    
     while(second) {
       const temp = second.next;
       second.next = first;
@@ -109,9 +110,11 @@ class LinkedList {
     }
     this.head.next = null;
     this.head = first;
+    return this;
   }
 
-  forEach(cb) {    
+  forEach(cb) {
+    if(!this.head) return cb(this.head);
     let node = this.head;
     while(node) {
       cb(node);
@@ -120,30 +123,27 @@ class LinkedList {
   }
 
   print() {
-    let result = [];
     this.forEach((node) => {
-      result.push(node.value);
+      console.log(node.value);
     })
-    return result.join(", ");
   }
 
   insertAfter(node, value) {
-    const newNode = new Node(value);    
+    const newNode = new Node(value);
     const nextNode = node.next;
     node.next = newNode;
     newNode.next = nextNode;
-    if(this.tail === node) this.tail = newNode;
-    return newNode
+    if(node === this.tail) this.tail = newNode;
+    return newNode;
   }
 
   removeAfter(node) {
     const removeNode = node.next;
-    if(!removeNode) return 'Nothing to remove';
-    const newNext = removeNode.next;
-    node.next = newNext;
-    removeNode.next = null;
+    if(!removeNode) return "Nothing to remove";
+    const newNode = removeNode.next;
+    node.next = newNode;
     if(this.tail === removeNode) this.tail = node;
-    return removeNode;
+    return node;
   }
 
   insertHead(value) {
@@ -162,15 +162,16 @@ class LinkedList {
     }
     head.next = null;
     this.head = newHead;
+    return newHead;
   }
 
   findNode(value) {
     if(!this.head) return null;
     let node = this.head;
-    while(node) {
-      if(node.value === value) return node;
+    while(node && node.value !== value) {
       node = node.next;
     }
+    return node;
   }
 
 }
