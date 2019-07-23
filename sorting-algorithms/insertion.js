@@ -29,3 +29,32 @@ now repeat for next unsorted element
 (https://en.wikipedia.org/wiki/Shellsort)
 
 */
+
+const insertionSort = (arr) => {
+  for(var i = 1; i < arr.length; i++) {
+    let j = 0
+    let running = true;
+    while(j < i && running) {
+      if(arr[i] < arr[j]) {
+        shift(arr, j ,i);
+        running = false;
+      }
+      j+=1;
+    }
+  }
+} // O(N^2)
+
+const shift = (arr, start, end) => {
+  const temp = arr[end];
+  let i = end;
+  while(i >= start) {
+    arr[i] = arr[i-1];
+    i-=1;
+  }
+  arr[start] = temp;
+}
+
+
+const arr = [23, 5, 3, 100, 2, 89];
+insertionSort(arr);
+console.log(arr)
