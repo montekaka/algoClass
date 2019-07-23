@@ -40,8 +40,7 @@ const merge = (left, right) => {
   const result = [];
   let k = left.length + right.length - 1;
   let i = left.length - 1;
-  let j = right.length - 1;  
-  
+  let j = right.length - 1;
   while(i >= 0 && j >= 0) {
     if(left[i] > right[j]) {
       result[k] = left[i];
@@ -55,14 +54,14 @@ const merge = (left, right) => {
 
   while(i >= 0) {
     result[k] = left[i];
-    i-=1;
     k-=1;
+    i-=1;
   }
 
   while(j >= 0) {
     result[k] = right[j];
-    j-=1;
     k-=1;
+    j-=1;
   }
 
   return result;

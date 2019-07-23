@@ -33,8 +33,8 @@ const selectionSort = (arr) => {
   for(var i = 0; i < arr.length; i++) {
     let smallest = arr[i];
     let smallestIdx = i;
-    for(var j = i; j < arr.length; j++) {
-      if(arr[j] < smallest){
+    for(var j = i+1; j < arr.length; j++) {
+      if(arr[j] <= arr[i]) {
         smallest = arr[j];
         smallestIdx = j;
       }
@@ -43,6 +43,7 @@ const selectionSort = (arr) => {
     arr[smallestIdx] = arr[i];
     arr[i] = smallest;    
   }
+  return arr;
 }
 
 

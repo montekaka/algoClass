@@ -30,6 +30,7 @@ const bubbleSort = (arr) => {
       }
     }
   }
+  return arr;
 } // O(N^2)
 
 
